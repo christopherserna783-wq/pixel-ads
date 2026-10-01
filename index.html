@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Ads - Agencia Digital</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --accent: #0ea5e9;
+            --whatsapp-color: #22c55e;
+            --whatsapp-hover: #16a34a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Contenedor Principal (Dashboard Sobrio) */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header Profesional con Logo */
+        .app-header {
+            padding: 20px;
+            background: #0f172a;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Isotipo SVG de Píxeles con Colores Corporativos */
+        .pixel-logo-svg {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+        }
+
+        .brand-text-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-weight: 800;
+            font-size: 20px;
+            line-height: 1;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 8px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Pestañas de Navegación */
+        .nav-tabs {
+            display: flex;
+            background: #0f172a;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 5px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn i { width: 16px; height: 16px; }
+
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background: rgba(14, 165, 233, 0.05);
+        }
+
+        /* Área de Contenido */
+        .content-area {
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 580px;
+            overflow-y: auto;
+        }
+
+        .content-area.active { display: flex; }
+
+        .content-area::-webkit-scrollbar { width: 4px; }
+        .content-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+        /* Banner Destacado */
+        .hero-pack {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .pack-tag {
+            background: rgba(14, 165, 233, 0.15);
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .pack-title { font-size: 15px; font-weight: 700; color: var(--text-main); }
+        .pack-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; margin-bottom: 12px; line-height: 1.4; }
+
+        /* Tarjetas de Servicios */
+        .service-item {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .service-item:hover {
+            border-color: var(--accent);
+            background: #1e293b;
+        }
+
+        .service-left { display: flex; align-items: center; gap: 12px; }
+        .service-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-info h4 { font-size: 13px; font-weight: 600; color: var(--text-main); }
+        .service-info p { font-size: 11px; color: var(--text-muted); }
+
+        .price-tag {
+            background: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* Formularios */
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+        .form-control {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #fff;
+            font-size: 12px;
+            outline: none;
+        }
+        .form-control:focus { border-color: var(--accent); }
+
+        /* Card de Previsualización */
+        .preview-box {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .preview-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 8px 0 4px 0;
+            word-break: break-word;
+        }
+
+        .preview-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent);
+            background: rgba(14, 165, 233, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Botón Principal */
+        .btn-action {
+            background: var(--whatsapp-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-action:hover { background: var(--whatsapp-hover); }
+
+        /* Galería Grid */
+        .pmv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .pmv-card {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .pmv-img { height: 90px; background-size: cover; background-position: center; }
+        .pmv-title { padding: 8px; font-size: 11px; font-weight: 600; color: var(--text-main); }
+
+        /* Modal Confirma */
+        .modal {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        .modal.active { display: flex; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header con Isotipo SVG exacto del Logo -->
+        <header class="app-header">
+            <div class="brand-box">
+                <svg class="pixel-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fila 1 -->
+                    <rect x="35" y="5" width="28" height="28" rx="2" fill="#C026D3"/>
+                    <!-- Fila 2 -->
+                    <rect x="5" y="35" width="28" height="28" rx="2" fill="#7C3AED"/>
+                    <rect x="65" y="35" width="28" height="28" rx="2" fill="#4F46E5"/>
+                    <!-- Fila 3 -->
+                    <rect x="5" y="65" width="28" height="28" rx="2" fill="#1D4ED8"/>
+                    <rect x="35" y="65" width="28" height="28" rx="2" fill="#2563EB"/>
+                    <rect x="65" y="65" width="28" height="28" rx="2" fill="#3B82F6"/>
+                    <!-- Fila 4 -->
+                    <rect x="35" y="95" width="28" height="28" rx="2" fill="#0EA5E9"/>
+                </svg>
+                <div class="brand-text-container">
+                    <div class="brand-title">PIXEL ADS</div>
+                    <div class="brand-subtitle">MODERNO E DIGITAL</div>
+                </div>
+            </div>
+            <i data-lucide="shield-check" style="color: var(--accent); width: 20px;"></i>
+        </header>
+
+        <!-- Navegación -->
+        <nav class="nav-tabs">
+            <div class="tab-btn active" onclick="openTab('tab-services', this)">
+                <i data-lucide="grid"></i> Servicios
+            </div>
+            <div class="tab-btn" onclick="openTab('tab-editor', this)">
+                <i data-lucide="sliders"></i> Diseñar
+            </div>
+            <div class="tab-btn" onclick="openTab('tab-gallery', this)">
+                <i data-lucide="folder"></i> Muestras
+            </div>
+        </nav>
+
+        <!-- Pestaña 1: Servicios -->
+        <main id="tab-services" class="content-area active">
+            <div class="hero-pack">
+                <span class="pack-tag">PAQUETE COMPLETO</span>
+                <div class="pack-title">Estrategia Digital 360°</div>
+                <div class="pack-desc">Incluye 5 publicaciones, 5 historias dinámicas y 1 reel corporativo adaptado a tu marca.</div>
+                <button class="btn-action" style="font-size: 12px; padding: 8px;" onclick="chooseService('Paquete Completo 360°', 40)">
+                    Solicitar por S/ 40
+                </button>
+            </div>
+
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Servicios Individuales</div>
+
+            <div class="service-item" onclick="chooseService('Publicación Sencilla', 5)">
+                <div class="service-left">
+                    <div class="service-icon"><i data-lucide="layout"></i></div>
+                    <div class="service-info">
+                        <h4>Publicación Digital</h4>
+                        <p>Diseño gráfico optimizado</p>
+                    </div>
+                </div>
+                <div class="price-tag">S/ 5</div>
+            </div>
+
+            <div class="service-item" onclick="chooseService('Historia Digital', 5)">
+                <div class="service-left">
+                    <div class="service-icon"><i data-lucide="smartphone"></i></div>
+                    <div class="service-info">
+                        <h4>Historia para Redes</h4>
+                        <p>Formato vertical Instagram / WA</p>
+                    </div>
+                </div>
+                <div class="price-tag">S/ 5</div>
+            </div>
+
+            <div class="service-item" onclick="chooseService('Flyer Publicitario', 8)">
+                <div class="service-left">
+                    <div class="service-icon"><i data-lucide="file-text"></i></div>
+                    <div class="service-info">
+                        <h4>Flyer Publicitario</h4>
+                        <p>Catálogo visual o promociones</p>
+                    </div>
+                </div>
+                <div class="price-tag">S/ 8</div>
+            </div>
+
+            <div class="service-item" onclick="chooseService('Video Corto (Reel/TikTok)', 12)">
+                <div class="service-left">
+                    <div class="service-icon"><i data-lucide="video"></i></div>
+                    <div class="service-info">
+                        <h4>Video Corto</h4>
+                        <p>Edición profesional para TikTok/Reels</p>
+                    </div>
+                </div>
+                <div class="price-tag">S/ 12</div>
+            </div>
+        </main>
+
+        <!-- Pestaña 2: Personalizar / Editor -->
+        <main id="tab-editor" class="content-area">
+            <div class="form-group">
+                <label>Nombre de la Empresa / Marca</label>
+                <input type="text" id="biz-input" class="form-control" placeholder="Ej. Centro Médico Vida" oninput="updatePreview()">
+            </div>
+
+            <div class="form-group">
+                <label>Rubro Comercial</label>
+                <select id="rubro-input" class="form-control" onchange="updatePreview()">
+                    <option value="Gastronomía">Gastronomía / Restaurante</option>
+                    <option value="Moda">Moda & Tienda de Ropa</option>
+                    <option value="Servicios Profesionales">Servicios Profesionales</option>
+                    <option value="Salud y Estética">Salud y Estética</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Servicio Seleccionado</label>
+                <input type="text" id="selected-service-text" class="form-control" value="Publicación Sencilla (S/ 5)" readonly style="color: var(--accent); font-weight: 600;">
+            </div>
+
+            <!-- Previsualización -->
+            <div class="preview-box">
+                <div style="font-size: 10px; color: var(--text-muted); text-transform: uppercase;">Vista Previa de Campaña</div>
+                <div class="preview-title" id="prev-name-text">TU MARCA AQUÍ</div>
+                <div class="preview-tag" id="prev-promo-text">OFERTA ESPECIAL</div>
+            </div>
+
+            <button class="btn-action" onclick="submitOrder()">
+                <i data-lucide="message-circle"></i> Enviar Pedido por WhatsApp
+            </button>
+        </main>
+
+        <!-- Pestaña 3: Galería PMV -->
+        <main id="tab-gallery" class="content-area">
+            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Prototipos Realizados</div>
+            
+            <div class="pmv-grid">
+                <div class="pmv-card">
+                    <div class="pmv-img" style="background-image: url('https://images.unsplash.com/photo-1550547660-d9450f859349?w=300');"></div>
+                    <div class="pmv-title">Restaurante</div>
+                </div>
+                <div class="pmv-card">
+                    <div class="pmv-img" style="background-image: url('https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?w=300');"></div>
+                    <div class="pmv-title">Tienda de Ropa</div>
+                </div>
+                <div class="pmv-card">
+                    <div class="pmv-img" style="background-image: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=300');"></div>
+                    <div class="pmv-title">Barbería</div>
+                </div>
+                <div class="pmv-card">
+                    <div class="pmv-img" style="background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=300');"></div>
+                    <div class="pmv-title">Centro Estético</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal Confirmación -->
+        <div id="modal-box" class="modal">
+            <div style="width: 48px; height: 48px; background: rgba(34, 197, 94, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--whatsapp-color); margin-bottom: 12px;">
+                <i data-lucide="check" style="width: 28px; height: 28px;"></i>
+            </div>
+            <h3 style="font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px;">Redirigiendo a WhatsApp</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">Te estamos conectando al +51 940 543 234 con los detalles de tu pedido.</p>
+            <button class="btn-action" onclick="closeModal()" style="width: 70%;">Aceptar</button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const PHONE_NUMBER = "51956338013";
+
+        function openTab(tabId, btn) {
+            document.querySelectorAll('.content-area').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function chooseService(name, price) {
+            document.getElementById('selected-service-text').value = `${name} (S/ ${price})`;
+            const tabBtn = document.querySelectorAll('.tab-btn')[1];
+            openTab('tab-editor', tabBtn);
+        }
+
+        function updatePreview() {
+            const biz = document.getElementById('biz-input').value || "TU MARCA AQUÍ";
+            const rubro = document.getElementById('rubro-input').value;
+
+            document.getElementById('prev-name-text').innerText = biz.toUpperCase();
+
+            let promo = "PROMO EXCLUSIVA";
+            if(rubro.includes("Gastronomía")) promo = "MENÚ O COMBO 2X1";
+            if(rubro.includes("Moda")) promo = "NUEVA COLECCIÓN";
+            if(rubro.includes("Salud")) promo = "DESCUENTO EN CONSULTA";
+
+            document.getElementById('prev-promo-text').innerText = promo;
+        }
+
+        function submitOrder() {
+            const biz = document.getElementById('biz-input').value || "No especificado";
+            const rubro = document.getElementById('rubro-input').value;
+            const servicio = document.getElementById('selected-service-text').value;
+
+            const text = `*¡Hola Pixel Ads!* 🚀\nQuiero solicitar un servicio:\n\n📌 *Marca:* ${biz}\n🏢 *Rubro:* ${rubro}\n💡 *Servicio:* ${servicio}`;
+            
+            const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(text)}`;
+            
+            document.getElementById('modal-box').classList.add('active');
+            
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, 800);
+        }
+
+        function closeModal() {
+            document.getElementById('modal-box').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
